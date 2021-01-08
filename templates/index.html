@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Aos css -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">    
+    <title>Shortify</title>
+    <style>
+        .bodycard{
+            text-align: center;
+            margin-top: 150px;
+            margin-bottom: 10%;
+            padding: 10%;
+            margin-left: 5%;
+            margin-right: 5%;
+            border-radius: 20px;
+            border: 0.1px solid lightgray;
+            box-shadow: 10px 10px 10px lightgray;
+            background-color: lavender;
+        }
+        .shortend{
+            margin-top: 40px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #short-url{
+            background-color: white;
+        }
+
+        .cpy{
+            margin-top: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+        }
+        .navbar-brand{
+            font-family: 'Fredoka One';
+        }
+        .footer{
+            width: 100%;
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            color: white;
+            background-color: darkslategray;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-dark" style="background-color: darkslategray;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="">Shortify URL Shortener Service</a>
+        </div>
+    </nav>
+    <div class="bodycard">
+        <form action="/" method="POST">
+            {% csrf_token %}            
+                <div class="input-group mb-3">
+                    <input type="url" id="longurl" name="longurl" class="form-control" placeholder="Type your URL here (Starting with http or https)" required>
+                    <button type="submit" class="btn btn-primary">Shortify</button>    
+                </div>
+        </form>
+        {% if short %}
+        <div class="shortend" data-aos="fade-up" data-aos-duration="3000">
+            <h4 style="font-family: 'Fredoka One';">Your shortened URL is</h4>
+            <div class="input-group mb-3 cpy">
+                <input type="url" class="form-control" readonly value="{{short}}" id="short-url">
+                <button class="btn btn-success" id="copybtn" onclick="myFunction()">Copy URL</button>    
+            </div>
+            <script>
+                function myFunction(){
+                    var copyText = document.getElementById("short-url");
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+                    document.execCommand("copy");
+                    var button=document.getElementById("copybtn");
+                        button.innerHTML="Copied !";
+                        button.style.backgroundColor="#dc3545";
+                    setTimeout(function(){
+                        button.innerHTML="Copy";
+                        button.style.backgroundColor="#198754";
+                    },1000)
+                }
+            </script>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <h6>Made with ❤ by juetcefreshers</h6>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
